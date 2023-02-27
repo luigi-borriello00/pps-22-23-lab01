@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class CircularListImpl implements CircularList{
-    private List<Integer> list = new ArrayList<>();
+    private final List<Integer> list = new ArrayList<>();
 
     private final int FIRST_ELEMENT_INDEX = 0;
     private int index = 0;
@@ -21,24 +21,15 @@ public class CircularListImpl implements CircularList{
 
     @Override
     public boolean isEmpty() {
-        return this.list.size() == 0;
+        return this.list.isEmpty();
     }
 
     @Override
     public Optional<Integer> next() {
         if (index == this.list.size()){
-            this.index = 0;
-        }
-        if(this.index <= this.list.size() - 1){
-            Optional<Integer> next =  Optional.of(this.list.get(index++));
-
-            return next;
-
-        }
-        else{
             index = FIRST_ELEMENT_INDEX;
-            return Optional.of(this.list.get(index));
         }
+        return this.isEmpty() ? Optional.empty() : Optional.of(this.list.get(index++));
     }
 
     @Override
