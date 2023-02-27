@@ -12,6 +12,8 @@ public class SimpleBankAccountWithAtmTest{
     private AccountHolder accountHolder;
     private BankAccountWithAtm bankAccount;
 
+    private final int DEPOSIT_AMOUNT = 100;
+
     @BeforeEach
     void beforeEach(){
         this.accountHolder = new AccountHolder("Luigi", "Borriello", 1);
@@ -21,15 +23,16 @@ public class SimpleBankAccountWithAtmTest{
     @Test
     void testDepositWithAtm(){
         final int EXPECTED_BALANCE = 99;
-        this.bankAccount.deposit(this.accountHolder.getId(), 100);
+        this.bankAccount.deposit(this.accountHolder.getId(), DEPOSIT_AMOUNT);
         assertEquals(EXPECTED_BALANCE, this.bankAccount.getBalance());
     }
 
     @Test
     void testWithDrawWithAtm(){
         final int EXPECTED_BALANCE = 48;
-        this.bankAccount.deposit(this.accountHolder.getId(), 100);
-        this.bankAccount.withdraw(this.accountHolder.getId(), 50);
+        final int WITHDRAW_AMOUNT = 50;
+        this.bankAccount.deposit(this.accountHolder.getId(), DEPOSIT_AMOUNT);
+        this.bankAccount.withdraw(this.accountHolder.getId(), WITHDRAW_AMOUNT);
         assertEquals(EXPECTED_BALANCE, this.bankAccount.getBalance());
     }
 
