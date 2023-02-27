@@ -17,9 +17,8 @@ public class CircularListTest {
     private CircularList list;
 
     private void fillTheList(int nElements){
-        final int ELEMENT_VALUE = 10;
         for(int i = 0; i < nElements; i++){
-            this.list.add(ELEMENT_VALUE - i);
+            this.list.add(i);
         }
     }
 
@@ -50,7 +49,7 @@ public class CircularListTest {
     @Test
     void testNextMethodOnTheCorner(){
         final int N_ELEMENTS = 5;
-        final int EXPECTED_VALUE = 10;
+        final int EXPECTED_VALUE = 0;
         fillTheList(N_ELEMENTS);
         for(int i = 0; i < N_ELEMENTS; i++){
             this.list.next();
@@ -62,15 +61,39 @@ public class CircularListTest {
     @Test
     void testPrevMethod(){
         final int N_ELEMENTS = 1;
+        final int EXPECTED_VALUE = 0;
+
         fillTheList(N_ELEMENTS);
         Optional<Integer> previous = this.list.previous();
         assertTrue(previous.isPresent());
-        assertEquals(10, previous.get());
+        assertEquals(EXPECTED_VALUE, previous.get());
+    }
+
+    /**
+     * Test if the list is circular using the "previous()" method
+     */
+    @Test
+    void testPrevMethodMultipleTimes(){
+        final int N_ELEMENTS = 5;
+        final int LAST_ELEMENT_VALUE = 4;
+        fillTheList(N_ELEMENTS);
+        for(int i = 0; i < N_ELEMENTS; i++){
+            this.list.previous();
+        }
+        Optional<Integer> firstElementPrev = this.list.previous();
+        assertTrue(firstElementPrev.isPresent());
+        assertEquals(LAST_ELEMENT_VALUE, firstElementPrev.get());
     }
 
     @Test
-    void testPrevMethodMultipleTimes(){
-        
+    void testReset(){
+        final int N_ELEMENTS = 5;
+        fillTheList(N_ELEMENTS);
+        this.list.next();
+
+        assertEquals(1, this.list.next().get());
+        this.list.reset();
+        assertEquals(0, this.list.next().get());
     }
 
 
