@@ -46,24 +46,27 @@ public class CircularListTest {
         assertTrue(this.list.next().isPresent());
     }
 
+    private void goToLastElement(){
+        for(int i = 0; i < this.list.size(); i++){
+            this.list.next();
+        }
+    }
     @Test
     void testNextMethodOnTheCorner(){
         final int N_ELEMENTS = 5;
-        final int EXPECTED_VALUE = 0;
+        final int FIRST_ELEMENT_VALUE = 0;
         fillTheList(N_ELEMENTS);
-        for(int i = 0; i < N_ELEMENTS; i++){
-            this.list.next();
-        }
-        Optional<Integer> next = this.list.next();
-        next.ifPresent(integer -> assertEquals(EXPECTED_VALUE, integer));
+        this.goToLastElement();
+        Optional<Integer> firstElem = this.list.next();
+        firstElem.ifPresent(integer -> assertEquals(FIRST_ELEMENT_VALUE, integer));
     }
 
     @Test
     void testPrevMethod(){
-        final int N_ELEMENTS = 1;
+        final int N_ELEMENTS = 2;
         final int EXPECTED_VALUE = 0;
-
         fillTheList(N_ELEMENTS);
+        this.goToLastElement();
         Optional<Integer> previous = this.list.previous();
         assertTrue(previous.isPresent());
         assertEquals(EXPECTED_VALUE, previous.get());

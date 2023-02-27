@@ -26,21 +26,32 @@ public class CircularListImpl implements CircularList{
 
     @Override
     public Optional<Integer> next() {
+        if (index == this.list.size()){
+            this.index = 0;
+        }
         if(this.index <= this.list.size() - 1){
-            return Optional.of(this.list.get(index++));
+            Optional<Integer> next =  Optional.of(this.list.get(index++));
+
+            return next;
+
         }
         else{
-            return Optional.of(this.list.get(FIRST_ELEMENT_INDEX));
+            index = FIRST_ELEMENT_INDEX;
+            return Optional.of(this.list.get(index));
         }
     }
 
     @Override
     public Optional<Integer> previous() {
+        if(this.index==this.list.size()){
+            this.index--;
+        }
         if(this.index > 0){
-            return Optional.of(this.list.get(index--));
+            return Optional.of(this.list.get(--index));
         }
         else{
-            return Optional.of(this.list.get(this.list.size() - 1));
+            index = this.list.size() - 1;
+            return Optional.of(this.list.get(index));
         }
     }
 
