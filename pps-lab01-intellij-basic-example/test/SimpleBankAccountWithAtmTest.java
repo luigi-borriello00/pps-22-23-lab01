@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SimpleBankAccountWithAtmTest{
 
+
     private AccountHolder accountHolder;
     private BankAccountWithAtm bankAccount;
 
@@ -19,15 +20,17 @@ public class SimpleBankAccountWithAtmTest{
 
     @Test
     void testDepositWithAtm(){
+        final int EXPECTED_BALANCE = 99;
         this.bankAccount.deposit(this.accountHolder.getId(), 100);
-        assertEquals(99, this.bankAccount.getBalance());
+        assertEquals(EXPECTED_BALANCE, this.bankAccount.getBalance());
     }
 
     @Test
     void testWithDrawWithAtm(){
+        final int EXPECTED_BALANCE = 48;
         this.bankAccount.deposit(this.accountHolder.getId(), 100);
         this.bankAccount.withdraw(this.accountHolder.getId(), 50);
-        assertEquals(48, this.bankAccount.getBalance());
+        assertEquals(EXPECTED_BALANCE, this.bankAccount.getBalance());
     }
 
 
