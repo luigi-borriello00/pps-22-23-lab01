@@ -14,6 +14,13 @@ public class CircularListTest {
 
     private CircularList list;
 
+    private void fillTheList(){
+        final int ELEMENT_VALUE = 10;
+        for(int i = 0; i < 5; i++){
+            this.list.add(ELEMENT_VALUE - i);
+        }
+    }
+
     @BeforeEach
     void beforeEach(){
         this.list = new CircularListImpl();
@@ -21,14 +28,23 @@ public class CircularListTest {
 
     @Test
     void testIsInitiallyEmpty(){
-        assertEquals(0, this.list.size());
+        assertTrue(this.list.isEmpty());
     }
 
     @Test
     void testElementCanBeAdded(){
         final int ELEMENT_VALUE = 10;
+        final int EXPECTED_LIST_SIZE = 1;
         this.list.add(ELEMENT_VALUE);
-        assertEquals(1, this.list.size());
+        assertEquals(EXPECTED_LIST_SIZE, this.list.size());
     }
-   
+
+    @Test
+    void testNextMethod(){
+        fillTheList();
+        assertTrue(this.list.next().isPresent());
+    }
+
+
+
 }
