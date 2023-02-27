@@ -7,7 +7,6 @@ import java.util.Optional;
 public class CircularListImpl implements CircularList{
     private final List<Integer> list = new ArrayList<>();
 
-    private final int FIRST_ELEMENT_INDEX = 0;
     private int index = 0;
     @Override
     public void add(int element) {
@@ -35,6 +34,7 @@ public class CircularListImpl implements CircularList{
             this.index = this.list.size() - 1;
         }
 
+        int FIRST_ELEMENT_INDEX = 0;
         if(this.index > FIRST_ELEMENT_INDEX){
             return Optional.of(this.list.get(--index));
         }

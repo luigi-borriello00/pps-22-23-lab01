@@ -1,8 +1,6 @@
 import lab01.tdd.CircularList;
 import lab01.tdd.CircularListImpl;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
@@ -14,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class CircularListTest {
 
+    private static final Object FIRST_ELEMENT_VALUE = 0;
     private CircularList list;
     private int nOfElements;
 
@@ -26,6 +25,7 @@ public class CircularListTest {
     @BeforeEach
     void beforeEach(){
         this.list = new CircularListImpl();
+        this.nOfElements = 3;
     }
 
     @Test
@@ -57,57 +57,50 @@ public class CircularListTest {
     }
     @Test
     void testNextMethodOnTheCorner(){
-        this.nOfElements = 5;
-        final int FIRST_ELEMENT_VALUE = 0;
-        fillTheList(this.nOfElements);
+        this.fillTheList(nOfElements);
         this.goToLastElement();
-        Optional<Integer> firstElem = this.list.next();
-        firstElem.ifPresent(integer -> assertEquals(FIRST_ELEMENT_VALUE, integer));
+        assertEquals(Optional.of(FIRST_ELEMENT_VALUE), this.list.next());
     }
 
     @Test
     void testPrevMethod(){
-        this.nOfElements = 2;
-        final int EXPECTED_VALUE = 0;
+        final int EXPECTED_VALUE = 1;
         fillTheList(this.nOfElements);
         this.goToLastElement();
-        Optional<Integer> previous = this.list.previous();
-        assertTrue(previous.isPresent());
-        assertEquals(EXPECTED_VALUE, previous.get());
+        assertEquals(Optional.of(EXPECTED_VALUE), this.list.previous());
     }
 
     /**
      * Test if the list is circular using the "previous()" method
      */
     @Test
-    void testPrevMethodMultipleTimes(){
-        this.nOfElements = 5;
-        final int LAST_ELEMENT_VALUE = 4;
+    void testPrevMethodOnTheCorner(){
+        final int LAST_ELEMENT_VALUE = 2;
         fillTheList(this.nOfElements);
         for(int i = 0; i < this.nOfElements; i++){
             this.list.previous();
         }
-        Optional<Integer> firstElementPrev = this.list.previous();
-        assertTrue(firstElementPrev.isPresent());
-        assertEquals(LAST_ELEMENT_VALUE, firstElementPrev.get());
+        assertEquals(Optional.of(LAST_ELEMENT_VALUE), this.list.previous());
     }
 
     @Test
     void testMultipleCommands(){
-        this.nOfElements = 3;
         fillTheList(this.nOfElements);
         this.list.next();
         this.list.next();
         this.list.next();
         this.list.next();
         this.list.previous();
+        this.list.previous();
+        this.list.previous();
+        this.list.previous();
+        this.list.previous();
 
-        assertEquals(Optional.of(1), this.list.next());
+        assertEquals(Optional.of(0), this.list.next());
     }
 
     @Test
     void testReset(){
-        this.nOfElements = 3;
         fillTheList(this.nOfElements);
         this.list.next();
         this.list.next();
@@ -115,7 +108,7 @@ public class CircularListTest {
         this.list.next();
         this.list.previous();
         this.list.reset();
-        assertEquals(0, this.list.next().get());
+        assertEquals(Optional.of(0), this.list.next());
     }
 
 
