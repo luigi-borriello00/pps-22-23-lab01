@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CircularListTest {
 
     private CircularList list;
+    private int nOfElements;
 
     private void fillTheList(int nElements){
         for(int i = 0; i < nElements; i++){
@@ -42,8 +43,11 @@ public class CircularListTest {
 
     @Test
     void testNextMethod(){
-        fillTheList(1);
-        assertTrue(this.list.next().isPresent());
+        this.nOfElements = 100;
+        fillTheList(this.nOfElements);
+        for(int i = 0; i < this.nOfElements; i++){
+            assertTrue(this.list.next().isPresent());
+        }
     }
 
     private void goToLastElement(){
@@ -53,9 +57,9 @@ public class CircularListTest {
     }
     @Test
     void testNextMethodOnTheCorner(){
-        final int N_ELEMENTS = 5;
+        this.nOfElements = 5;
         final int FIRST_ELEMENT_VALUE = 0;
-        fillTheList(N_ELEMENTS);
+        fillTheList(this.nOfElements);
         this.goToLastElement();
         Optional<Integer> firstElem = this.list.next();
         firstElem.ifPresent(integer -> assertEquals(FIRST_ELEMENT_VALUE, integer));
@@ -63,9 +67,9 @@ public class CircularListTest {
 
     @Test
     void testPrevMethod(){
-        final int N_ELEMENTS = 2;
+        this.nOfElements = 2;
         final int EXPECTED_VALUE = 0;
-        fillTheList(N_ELEMENTS);
+        fillTheList(this.nOfElements);
         this.goToLastElement();
         Optional<Integer> previous = this.list.previous();
         assertTrue(previous.isPresent());
@@ -77,10 +81,10 @@ public class CircularListTest {
      */
     @Test
     void testPrevMethodMultipleTimes(){
-        final int N_ELEMENTS = 5;
+        this.nOfElements = 5;
         final int LAST_ELEMENT_VALUE = 4;
-        fillTheList(N_ELEMENTS);
-        for(int i = 0; i < N_ELEMENTS; i++){
+        fillTheList(this.nOfElements);
+        for(int i = 0; i < this.nOfElements; i++){
             this.list.previous();
         }
         Optional<Integer> firstElementPrev = this.list.previous();
@@ -89,12 +93,27 @@ public class CircularListTest {
     }
 
     @Test
-    void testReset(){
-        final int N_ELEMENTS = 5;
-        fillTheList(N_ELEMENTS);
+    void testMultipleCommands(){
+        this.nOfElements = 3;
+        fillTheList(this.nOfElements);
         this.list.next();
+        this.list.next();
+        this.list.next();
+        this.list.next();
+        this.list.previous();
 
-        assertEquals(1, this.list.next().get());
+        assertEquals(Optional.of(1), this.list.next());
+    }
+
+    @Test
+    void testReset(){
+        this.nOfElements = 3;
+        fillTheList(this.nOfElements);
+        this.list.next();
+        this.list.next();
+        this.list.next();
+        this.list.next();
+        this.list.previous();
         this.list.reset();
         assertEquals(0, this.list.next().get());
     }

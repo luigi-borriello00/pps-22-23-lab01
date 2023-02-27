@@ -26,18 +26,16 @@ public class CircularListImpl implements CircularList{
 
     @Override
     public Optional<Integer> next() {
-        if (index == this.list.size()){
-            index = FIRST_ELEMENT_INDEX;
-        }
-        return this.isEmpty() ? Optional.empty() : Optional.of(this.list.get(index++));
-    }
+        return this.isEmpty() ? Optional.empty() : Optional.of(this.list.get((index++) % this.list.size() ));
+  }
 
     @Override
     public Optional<Integer> previous() {
-        if(this.index==this.list.size()){
-            this.index--;
+        if(this.index >= this.list.size()){
+            this.index = this.list.size() - 1;
         }
-        if(this.index > 0){
+
+        if(this.index > FIRST_ELEMENT_INDEX){
             return Optional.of(this.list.get(--index));
         }
         else{
