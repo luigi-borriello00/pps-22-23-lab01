@@ -6,6 +6,8 @@ import java.util.Optional;
 
 public class CircularListImpl implements CircularList{
     private List<Integer> list = new ArrayList<>();
+
+    private final int FIRST_ELEMENT_INDEX = 0;
     private int index = 0;
     @Override
     public void add(int element) {
@@ -24,17 +26,22 @@ public class CircularListImpl implements CircularList{
 
     @Override
     public Optional<Integer> next() {
-        if(this.index < this.list.size() - 1){
+        if(this.index <= this.list.size() - 1){
             return Optional.of(this.list.get(index++));
         }
         else{
-            return Optional.empty();
+            return Optional.of(this.list.get(FIRST_ELEMENT_INDEX));
         }
     }
 
     @Override
     public Optional<Integer> previous() {
-        return Optional.empty();
+        if(this.index > 0){
+            return Optional.of(this.list.get(index--));
+        }
+        else{
+            return Optional.of(this.list.get(this.list.size() - 1));
+        }
     }
 
     @Override

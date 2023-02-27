@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -14,9 +16,9 @@ public class CircularListTest {
 
     private CircularList list;
 
-    private void fillTheList(){
+    private void fillTheList(int nElements){
         final int ELEMENT_VALUE = 10;
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i < nElements; i++){
             this.list.add(ELEMENT_VALUE - i);
         }
     }
@@ -41,9 +43,37 @@ public class CircularListTest {
 
     @Test
     void testNextMethod(){
-        fillTheList();
+        fillTheList(1);
         assertTrue(this.list.next().isPresent());
     }
+
+    @Test
+    void testNextMethodOnTheCorner(){
+        final int N_ELEMENTS = 5;
+        final int EXPECTED_VALUE = 10;
+        fillTheList(N_ELEMENTS);
+        for(int i = 0; i < N_ELEMENTS; i++){
+            this.list.next();
+        }
+        Optional<Integer> next = this.list.next();
+        next.ifPresent(integer -> assertEquals(EXPECTED_VALUE, integer));
+    }
+
+    @Test
+    void testPrevMethod(){
+        final int N_ELEMENTS = 1;
+        fillTheList(N_ELEMENTS);
+        Optional<Integer> previous = this.list.previous();
+        assertTrue(previous.isPresent());
+        assertEquals(10, previous.get());
+    }
+
+    @Test
+    void testPrevMethodMultipleTimes(){
+        
+    }
+
+
 
 
 
