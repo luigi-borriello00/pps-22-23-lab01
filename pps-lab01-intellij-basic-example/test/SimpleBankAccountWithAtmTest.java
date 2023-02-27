@@ -17,7 +17,12 @@ public class SimpleBankAccountWithAtmTest{
         this.bankAccount = new SimpleBankAccountWithAtm(this.accountHolder, 0);
     }
 
-    
+    @Test
+    void testDepositWithAtm(){
+        this.bankAccount.deposit(this.accountHolder.getId(), 100);
+        assertEquals(99, this.bankAccount.getBalance());
+    }
+
     @Test
     void testWithDrawWithAtm(){
         this.bankAccount.deposit(this.accountHolder.getId(), 100);
