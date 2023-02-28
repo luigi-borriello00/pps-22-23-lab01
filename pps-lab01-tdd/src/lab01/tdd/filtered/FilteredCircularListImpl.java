@@ -3,32 +3,34 @@ package lab01.tdd.filtered;
 import lab01.tdd.CircularList;
 import lab01.tdd.CircularListImpl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 public class FilteredCircularListImpl implements FilteredCircularList {
 
-    CircularList list = new CircularListImpl();
+    private CircularList list = new CircularListImpl();
+    private Set<Integer> elementsOfTheList = new HashSet<>();
 
     @Override
     public void add(int i) {
         this.list.add(i);
+        this.elementsOfTheList.add(i);
+    }
+
+    private Boolean checkPredicate(Predicate<Integer> predicate){
+        return this.elementsOfTheList.stream()
+                .anyMatch(predicate);
     }
 
     @Override
     public Optional<Integer> filteredNext(Predicate<Integer> predicate) {
-        Optional<Integer> next;
-        do {
-            next = this.list.next();
-            if(next.isPresent()){
-                System.out.println(next + "" + predicate.test(next.get()));
-            }
-            else{
-                break;
-            }
-          } while (!predicate.test(next.get()));
-        return next;
+        return this.checkPredicate(predicate) ?
+                Optional.empty() :
+                Stream.generate(list::next)
+                        .filter(Optional::isPresent)
+                        .map(Optional::get)
+                        .filter(predicate)
+                        .findFirst();
     }
 }

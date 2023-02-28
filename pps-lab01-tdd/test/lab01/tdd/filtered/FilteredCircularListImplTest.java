@@ -42,8 +42,11 @@ class FilteredCircularListImplTest {
     }
 
     @Test
-    void testWrongPredicate(){
-
+    void testNoElementFiltered(){
+        this.list.add(1);
+        this.list.add(3);
+        Predicate<Integer> evenPredicate = i -> (i % 2 == 0);
+        assertEquals(Optional.empty(), this.list.filteredNext(evenPredicate));
     }
 
 }
