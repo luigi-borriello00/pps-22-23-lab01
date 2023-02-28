@@ -38,7 +38,7 @@ class CircularListWithIteratorImplTest {
     }
 
     @Test
-    void testMultipleElementsAreAdded(){
+    void testForwardWithMultipleElements(){
         int nElements = 3;
         this.fillTheList(3);
         Iterator<Integer> iter = this.list.forwardIterator();
@@ -50,7 +50,7 @@ class CircularListWithIteratorImplTest {
     }
 
     @Test
-    void testMultipleIterator(){
+    void testMultipleForwardIterator(){
         int nElements = 4;
         this.fillTheList(nElements);
         for(int i = 0; i < N_OF_ITERACTIONS; i++){
@@ -60,6 +60,14 @@ class CircularListWithIteratorImplTest {
         }
     }
 
+    @Test
+    void testBackWardIterator(){
+        int nElements = 5;
+        this.fillTheList(nElements);
+        Iterator<Integer> iter = this.list.backwardIterator();
+        assertTrue(iter.hasNext());
+
+    }
 
     @Test
     void forwardIterator() {
