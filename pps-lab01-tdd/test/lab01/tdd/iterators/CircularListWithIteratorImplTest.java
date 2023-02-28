@@ -66,14 +66,23 @@ class CircularListWithIteratorImplTest {
         this.fillTheList(nElements);
         Iterator<Integer> iter = this.list.backwardIterator();
         assertTrue(iter.hasNext());
+        assertEquals(nElements - 1, iter.next());
 
     }
 
     @Test
-    void forwardIterator() {
-    }
-
-    @Test
-    void backwardIterator() {
+    void testBothIteratorNext(){
+        int nElements = 40;
+        this.fillTheList(nElements);
+        Iterator<Integer> forward = this.list.forwardIterator();
+        Iterator<Integer> backward = this.list.backwardIterator();
+        for(int i = 0; i < nElements * 5; i++){
+            assertTrue(forward.hasNext());
+            assertEquals(i % nElements, forward.next());
+        }
+        for(int i = 0; i < nElements; i++){
+            assertTrue(backward.hasNext());
+            assertEquals(nElements - (i+1), backward.next());
+        }
     }
 }

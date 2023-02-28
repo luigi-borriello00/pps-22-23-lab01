@@ -44,7 +44,7 @@ public class CircularListWithIteratorImpl implements CircularListWithIterator{
 
             @Override
             public Integer next() {
-                pointer = pointer < 0 ? list.size() - 1 : pointer - 1;
+                pointer = pointer <= 0 ? list.size() - 1 : pointer - 1;
                 return list.get(pointer);
             }
         };
