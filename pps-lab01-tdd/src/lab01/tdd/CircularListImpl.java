@@ -7,7 +7,7 @@ import java.util.Optional;
 public class CircularListImpl implements CircularList{
     private final List<Integer> list = new ArrayList<>();
 
-    private int index = 0;
+    private int pointer = 0;
     @Override
     public void add(int element) {
         this.list.add(element);
@@ -25,27 +25,27 @@ public class CircularListImpl implements CircularList{
 
     @Override
     public Optional<Integer> next() {
-        return this.isEmpty() ? Optional.empty() : Optional.of(this.list.get((index++) % this.list.size() ));
+        return this.isEmpty() ? Optional.empty() : Optional.of(this.list.get((pointer++) % this.list.size() ));
   }
 
     @Override
     public Optional<Integer> previous() {
-        if(this.index >= this.list.size()){
-            this.index = this.list.size() - 1;
+        if(this.pointer >= this.list.size()){
+            this.pointer = this.list.size() - 1;
         }
 
         int FIRST_ELEMENT_INDEX = 0;
-        if(this.index > FIRST_ELEMENT_INDEX){
-            return Optional.of(this.list.get(--index));
+        if(this.pointer > FIRST_ELEMENT_INDEX){
+            return Optional.of(this.list.get(--pointer));
         }
         else{
-            index = this.list.size() - 1;
-            return Optional.of(this.list.get(index));
+            pointer = this.list.size() - 1;
+            return Optional.of(this.list.get(pointer));
         }
     }
 
     @Override
     public void reset() {
-        this.index = 0;
+        this.pointer = 0;
     }
 }
