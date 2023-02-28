@@ -24,10 +24,8 @@ public class CircularListWithIteratorImpl implements CircularListWithIterator {
 
     @Override
     public Iterator<Integer> backwardIterator() {
-
         List<Integer> copyList = new ArrayList<>(this.list);
         Collections.reverse(copyList);
-
         return copyList.isEmpty() ?
                 Collections.emptyIterator() :
                 Stream.generate(() -> copyList)
