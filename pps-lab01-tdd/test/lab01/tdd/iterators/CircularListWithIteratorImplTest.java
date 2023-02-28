@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CircularListWithIteratorImplTest {
 
+    public static final int N_OF_ITERACTIONS = 100;
     CircularListWithIterator list;
 
     @BeforeEach
@@ -18,22 +19,44 @@ class CircularListWithIteratorImplTest {
     }
 
     @Test
+    void testIsInitiallyEmpty(){
+        assertFalse(this.list.forwardIterator().hasNext());
+    }
+
+
+    @Test
     void testElementIsAdd(){
         this.list.add(0);
         Iterator<Integer> iter = this.list.forwardIterator();
         assertTrue(iter.hasNext());
     }
 
+    private void fillTheList(int n_elements){
+        for(int i = 0; i < n_elements; i++){
+            this.list.add(i);
+        }
+    }
+
     @Test
     void testMultipleElementsAreAdded(){
-        this.list.add(0);
-        this.list.add(1);
-        this.list.add(2);
-        this.list.add(3);
+        int nElements = 3;
+        this.fillTheList(3);
         Iterator<Integer> iter = this.list.forwardIterator();
-        for(int i = 0; i < 78; i++){
+        for(int i = 0; i <
+                N_OF_ITERACTIONS; i++){
             assertTrue(iter.hasNext());
             Integer next = iter.next();
+        }
+    }
+
+    @Test
+    void testMultipleIterator(){
+        int nElements = 4;
+        this.fillTheList(nElements);
+        for(int i = 0; i < N_OF_ITERACTIONS; i++){
+            Iterator<Integer> iter = this.list.forwardIterator();
+            assertTrue(iter.hasNext());
+            assertEquals(i % nElements, iter.next());
         }
     }
 
