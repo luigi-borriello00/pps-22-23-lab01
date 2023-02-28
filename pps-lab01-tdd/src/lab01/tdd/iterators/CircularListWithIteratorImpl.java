@@ -24,13 +24,13 @@ public class CircularListWithIteratorImpl implements CircularListWithIterator {
 
     @Override
     public Iterator<Integer> backwardIterator() {
-        if (!this.list.isEmpty()) {
-            Collections.reverse(this.list);
-        }
 
-        return this.list.isEmpty() ?
+        List<Integer> copyList = new ArrayList<>(this.list);
+        Collections.reverse(copyList);
+
+        return copyList.isEmpty() ?
                 Collections.emptyIterator() :
-                Stream.generate(() -> this.list)
+                Stream.generate(() -> copyList)
                         .flatMap(List::stream)
                         .iterator();
     }
