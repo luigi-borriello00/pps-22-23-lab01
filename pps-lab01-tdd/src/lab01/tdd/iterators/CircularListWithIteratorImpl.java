@@ -1,16 +1,12 @@
 package lab01.tdd.iterators;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Stream;
 
-public class CircularListWithIteratorImpl implements CircularListWithIterator{
+public class CircularListWithIteratorImpl implements CircularListWithIterator {
 
 
-    private List<Integer> list = new ArrayList<>();
-    private int pointer = 0;
-
+    private final List<Integer> list = new ArrayList<>();
 
     @Override
     public void add(Integer element) {
@@ -19,34 +15,23 @@ public class CircularListWithIteratorImpl implements CircularListWithIterator{
 
     @Override
     public Iterator<Integer> forwardIterator() {
-        return new Iterator<Integer>() {
-            @Override
-            public boolean hasNext() {
-                return pointer < list.size();
-            }
-
-            @Override
-            public Integer next() {
-                Integer nextElem = list.get(pointer);
-                pointer = (pointer + 1) % list.size();
-                return nextElem;
-            }
-        };
+        return this.list.isEmpty() ?
+                Collections.emptyIterator() :
+                Stream.generate(() -> this.list)
+                        .flatMap(List::stream)
+                        .iterator();
     }
 
     @Override
     public Iterator<Integer> backwardIterator() {
-        return new Iterator<Integer>() {
-            @Override
-            public boolean hasNext() {
-                return list.size() > 0;
-            }
+        if (!this.list.isEmpty()) {
+            Collections.reverse(this.list);
+        }
 
-            @Override
-            public Integer next() {
-                pointer = pointer <= 0 ? list.size() - 1 : pointer - 1;
-                return list.get(pointer);
-            }
-        };
+        return this.list.isEmpty() ?
+                Collections.emptyIterator() :
+                Stream.generate(() -> this.list)
+                        .flatMap(List::stream)
+                        .iterator();
     }
 }

@@ -4,13 +4,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Iterator;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CircularListWithIteratorImplTest {
 
-    public static final int N_OF_ITERACTIONS = 100;
+    public static final int ITERACTIONS = 100;
     CircularListWithIterator list;
 
     @BeforeEach
@@ -43,7 +42,7 @@ class CircularListWithIteratorImplTest {
         this.fillTheList(3);
         Iterator<Integer> iter = this.list.forwardIterator();
         for(int i = 0; i <
-                N_OF_ITERACTIONS; i++){
+                ITERACTIONS; i++){
             assertTrue(iter.hasNext());
             Integer next = iter.next();
         }
@@ -53,10 +52,10 @@ class CircularListWithIteratorImplTest {
     void testMultipleForwardIterator(){
         int nElements = 4;
         this.fillTheList(nElements);
-        for(int i = 0; i < N_OF_ITERACTIONS; i++){
+        for(int i = 0; i < ITERACTIONS; i++){
             Iterator<Integer> iter = this.list.forwardIterator();
             assertTrue(iter.hasNext());
-            assertEquals(i % nElements, iter.next());
+            assertEquals(0, iter.next());
         }
     }
 
