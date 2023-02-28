@@ -49,7 +49,7 @@ class CircularListWithIteratorImplTest {
     }
 
     @Test
-    void testMultipleForwardIterator(){
+    void testIfAreTheIteratorsIndependent(){
         int nElements = 4;
         this.fillTheList(nElements);
         for(int i = 0; i < ITERACTIONS; i++){
