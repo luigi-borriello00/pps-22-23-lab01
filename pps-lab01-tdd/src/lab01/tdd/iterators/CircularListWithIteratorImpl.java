@@ -5,7 +5,6 @@ import java.util.stream.Stream;
 
 public class CircularListWithIteratorImpl implements CircularListWithIterator {
 
-
     private final List<Integer> list = new ArrayList<>();
 
     @Override

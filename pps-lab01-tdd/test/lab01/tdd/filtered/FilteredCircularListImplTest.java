@@ -12,25 +12,25 @@ class FilteredCircularListImplTest {
     private FilteredCircularList list;
 
     @BeforeEach
-    void beforeEach(){
+    void beforeEach() {
         this.list = new FilteredCircularListImpl();
     }
 
-    private void fillTheList(){
+    private void fillTheList() {
         int nElements = 10;
-        for(int i = 0; i < nElements; i++){
+        for (int i = 0; i < nElements; i++) {
             this.list.add(i);
         }
     }
 
     @Test
-    void testPredicateOnEmptyList(){
+    void testPredicateOnEmptyList() {
         Predicate<Integer> evenPredicate = i -> (i % 2 == 0);
         assertEquals(Optional.empty(), this.list.filteredNext(evenPredicate));
     }
 
     @Test
-    void testCorrectPredicate(){
+    void testCorrectPredicate() {
         this.fillTheList();
         Predicate<Integer> evenPredicate = i -> (i % 2 == 0);
         assertEquals(Optional.of(0), this.list.filteredNext(evenPredicate));
@@ -42,7 +42,7 @@ class FilteredCircularListImplTest {
     }
 
     @Test
-    void testNoElementFiltered(){
+    void testNoElementFiltered() {
         this.list.add(1);
         this.list.add(3);
         Predicate<Integer> evenPredicate = i -> (i % 2 == 0);

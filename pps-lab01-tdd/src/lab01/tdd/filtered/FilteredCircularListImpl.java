@@ -9,8 +9,8 @@ import java.util.stream.Stream;
 
 public class FilteredCircularListImpl implements FilteredCircularList {
 
-    private CircularList list = new CircularListImpl();
-    private Set<Integer> elementsOfTheList = new HashSet<>();
+    private final CircularList list = new CircularListImpl();
+    private final Set<Integer> elementsOfTheList = new HashSet<>();
 
     @Override
     public void add(int i) {
@@ -18,7 +18,7 @@ public class FilteredCircularListImpl implements FilteredCircularList {
         this.elementsOfTheList.add(i);
     }
 
-    private Boolean checkPredicate(Predicate<Integer> predicate){
+    private Boolean checkPredicate(Predicate<Integer> predicate) {
         return this.elementsOfTheList.stream()
                 .anyMatch(predicate);
     }
@@ -26,11 +26,11 @@ public class FilteredCircularListImpl implements FilteredCircularList {
     @Override
     public Optional<Integer> filteredNext(Predicate<Integer> predicate) {
         return this.checkPredicate(predicate) ?
-                Optional.empty() :
                 Stream.generate(list::next)
                         .filter(Optional::isPresent)
                         .map(Optional::get)
                         .filter(predicate)
-                        .findFirst();
+                        .findFirst() :
+                Optional.empty();
     }
 }
