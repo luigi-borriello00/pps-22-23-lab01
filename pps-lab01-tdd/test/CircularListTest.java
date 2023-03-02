@@ -16,7 +16,7 @@ public class CircularListTest {
     private CircularList list;
     private int nOfElements;
 
-    private void fillTheList(int nElements){
+    private void fillTheListForTheTest(int nElements){
         for(int i = 0; i < nElements; i++){
             this.list.add(i);
         }
@@ -44,7 +44,7 @@ public class CircularListTest {
     @Test
     void testNextMethod(){
         this.nOfElements = 100;
-        fillTheList(this.nOfElements);
+        fillTheListForTheTest(this.nOfElements);
         for(int i = 0; i < this.nOfElements; i++){
             assertTrue(this.list.next().isPresent());
         }
@@ -57,7 +57,7 @@ public class CircularListTest {
     }
     @Test
     void testNextMethodOnTheCorner(){
-        this.fillTheList(nOfElements);
+        this.fillTheListForTheTest(nOfElements);
         this.goToLastElement();
         assertEquals(Optional.of(VALUE_OF_THE_FIRST_ELEMENT), this.list.next());
     }
@@ -65,7 +65,7 @@ public class CircularListTest {
     @Test
     void testPrevMethod(){
         final int EXPECTED_VALUE = 1;
-        fillTheList(this.nOfElements);
+        fillTheListForTheTest(this.nOfElements);
         this.goToLastElement();
         assertEquals(Optional.of(EXPECTED_VALUE), this.list.previous());
     }
@@ -76,7 +76,7 @@ public class CircularListTest {
     @Test
     void testPrevMethodOnTheCorner(){
         final int LAST_ELEMENT_VALUE = 2;
-        fillTheList(this.nOfElements);
+        fillTheListForTheTest(this.nOfElements);
         for(int i = 0; i < this.nOfElements; i++){
             this.list.previous();
         }
@@ -85,7 +85,7 @@ public class CircularListTest {
 
     @Test
     void testMultipleCommands(){
-        fillTheList(this.nOfElements);
+        fillTheListForTheTest(this.nOfElements);
         this.list.next();
         this.list.next();
         this.list.next();
@@ -101,7 +101,7 @@ public class CircularListTest {
 
     @Test
     void testReset(){
-        fillTheList(this.nOfElements);
+        fillTheListForTheTest(this.nOfElements);
         this.list.next();
         this.list.next();
         this.list.next();
