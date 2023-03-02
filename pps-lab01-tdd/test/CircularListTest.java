@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class CircularListTest {
 
-    private static final Object FIRST_ELEMENT_VALUE = 0;
+    private static final int VALUE_OF_THE_FIRST_ELEMENT = 0;
     private CircularList list;
     private int nOfElements;
 
@@ -59,7 +59,7 @@ public class CircularListTest {
     void testNextMethodOnTheCorner(){
         this.fillTheList(nOfElements);
         this.goToLastElement();
-        assertEquals(Optional.of(FIRST_ELEMENT_VALUE), this.list.next());
+        assertEquals(Optional.of(VALUE_OF_THE_FIRST_ELEMENT), this.list.next());
     }
 
     @Test
